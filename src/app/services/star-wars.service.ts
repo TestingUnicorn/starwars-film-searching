@@ -1,13 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
-import {
-  SwapiResponse,
-  SwapiFilm,
-  SwapiPerson,
-  SwapiStarship,
-  SwapiVehicle,
-} from '../models/swapi.model';
+import { SwapiResponse, SwapiFilm, SwapiEntity } from '../models/swapi.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,31 +14,37 @@ export class SwapiService {
     return this.http.get<SwapiResponse<SwapiFilm>>(`${this.baseUrl}/films/`);
   }
 
-  searchPeople(name: string): Observable<SwapiResponse<SwapiPerson>> {
-    return this.http.get<SwapiResponse<SwapiPerson>>(
+  searchPeople(name: string): Observable<SwapiResponse<SwapiEntity>> {
+    return this.http.get<SwapiResponse<SwapiEntity>>(
       `${this.baseUrl}/people/?search=${name}`
     );
   }
 
-  searchStarships(name: string): Observable<SwapiResponse<SwapiStarship>> {
-    return this.http.get<SwapiResponse<SwapiStarship>>(
+  searchStarships(name: string): Observable<SwapiResponse<SwapiEntity>> {
+    return this.http.get<SwapiResponse<SwapiEntity>>(
       `${this.baseUrl}/starships/?search=${name}`
     );
   }
 
-  searchVehicles(name: string): Observable<SwapiResponse<SwapiVehicle>> {
-    return this.http.get<SwapiResponse<SwapiVehicle>>(
+  searchVehicles(name: string): Observable<SwapiResponse<SwapiEntity>> {
+    return this.http.get<SwapiResponse<SwapiEntity>>(
       `${this.baseUrl}/vehicles/?search=${name}`
     );
   }
 
-
-  searchAll(name: string): Observable<[SwapiResponse<SwapiPerson>, SwapiResponse<SwapiStarship>, SwapiResponse<SwapiVehicle>]> {
-  return forkJoin([
-    this.searchPeople(name),
-    this.searchStarships(name),
-    this.searchVehicles(name)
-  ]);
-}
-
+  searchAll(
+    name: string
+  ): Observable<
+    [
+      SwapiResponse<SwapiEntity>,
+      SwapiResponse<SwapiEntity>,
+      SwapiResponse<SwapiEntity>
+    ]
+  > {
+    return forkJoin([
+      this.searchPeople(name),
+      this.searchStarships(name),
+      this.searchVehicles(name),
+    ]);
+  }
 }
