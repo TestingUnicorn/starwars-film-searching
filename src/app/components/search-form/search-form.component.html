@@ -1,0 +1,57 @@
+<form
+  class="d-flex justify-content-center pt-5 flex-wrap"
+  (submit)="onSearchClick(); $event.preventDefault()"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-4">
+        <app-search-input
+          #starshipInput
+          [placeholder]="'Starship*'"
+          [required]="activeRequiredField === 'starship'"
+          (statusChange)="updateValidity('starship', $event)"
+          (input)="onInput('starship')"
+          class="w-100 form-control-sm"
+        ></app-search-input>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <app-search-input
+          #peopleInput
+          [placeholder]="'People*'"
+          [required]="activeRequiredField === 'people'"
+          (statusChange)="updateValidity('people', $event)"
+          (input)="onInput('people')"
+          class="w-100 form-control-sm"
+        ></app-search-input>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <app-search-input
+          #vehicleInput
+          [placeholder]="'Vehicle*'"
+          [required]="activeRequiredField === 'vehicle'"
+          (statusChange)="updateValidity('vehicle', $event)"
+          (input)="onInput('vehicle')"
+          class="w-100 form-control-sm"
+        ></app-search-input>
+
+        <div class="d-flex justify-content-end">
+          <button
+            type="submit"
+            class="btn btn-secondary btn-sm active"
+            [disabled]="isDisabled"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    @if(notExistMessage){
+    <div class="text-danger mt-2 mb-2 text-center fade-in">
+      {{ notExistMessage }}
+    </div>
+    }
+  </div>
+</form>

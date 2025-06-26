@@ -1,0 +1,38 @@
+<app-search-form
+  [films]="films"
+  [people]="people"
+  [starships]="starships"
+  [vehicles]="vehicles"
+  (highlightFilmUrls)="onHighlightFilms($event)"
+></app-search-form>
+<div class="d-flex justify-content-center my-3">
+  <hr class="custom-hr border-top border-2 border-dark" />
+</div>
+
+<div class="container">
+  <div class="row">
+    @for (film of films; track film) {
+    <div class="col-sm-4 mb-4">
+      <div
+        class="card h-100"
+        [ngClass]="{
+          'bg-success bg-opacity-25': highlightedFilmUrls.includes(film.url)
+        }"
+      >
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ film.title }}</h5>
+          <p class="card-text">{{ film.opening_crawl | slice : 0 : 200 }}...</p>
+          <ul class="list-unstyled mt-auto">
+            <li><strong>Episode:</strong> {{ film.episode_id }}</li>
+            <li><strong>Director:</strong> {{ film.director }}</li>
+            <li>
+              <strong>Release:</strong>
+              {{ film.release_date | date : "dd.MM.y" }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

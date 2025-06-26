@@ -1,0 +1,22 @@
+<div class="input-group mb-3">
+  <input
+    type="text"
+    class="form-control py-2 px-3"
+    [formControl]="searchControl"
+    [placeholder]="placeholder"
+    (blur)="touch()"
+    (input)="onInputChange()"
+  />
+</div>
+
+@if (searchControl.touched && searchControl.invalid) {
+<div class="text-danger">
+  @if (searchControl.errors?.['required']) {
+  <small>This field is required.</small>
+  } @if (searchControl.errors?.['minlength']) {
+  <small>Minimum 3 characters required.</small>
+  } @if (searchControl.errors?.['maxlength']) {
+  <small>Maximum 50 characters allowed.</small>
+  }
+</div>
+}
